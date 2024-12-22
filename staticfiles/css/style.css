@@ -1,0 +1,100 @@
+/* 基本のスタイル設定 */
+body {
+    background-color: #e6f7ff; /* パステルカラーの水色背景 */
+    color: #333; /* テキストの色 */
+    font-family: 'Arial', sans-serif; /* フォント設定 */
+    text-align: center; /* 文字を中央揃え */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6; /* 行間を少し広げる */
+}
+
+/* ダークモード対応 (body に dark-mode クラスが付いた場合) */
+body.dark-mode {
+    background-color: #1a1a1a; /* 背景をダークグレーに変更 */
+    color: #f0f0f0; /* テキストを明るい色に変更 */
+}
+
+/* ヘッダーのスタイル */
+header {
+    background-color: #007acc; /* ヘッダーの背景色 */
+    color: #ffffff; /* ヘッダー内の文字色 */
+    padding: 20px 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+/* ナビゲーションメニューのスタイル */
+nav ul {
+    list-style-type: none; /* リストマーカーを削除 */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* リンクを中央揃え */
+    gap: 20px; /* リンク間のスペース */
+}
+
+nav ul li {
+    display: inline; /* リストアイテムを横並びに */
+}
+
+nav ul li a {
+    color: #ffffff; /* リンク文字の色 */
+    text-decoration: none; /* 下線を削除 */
+    font-size: 1.2em;
+    padding: 10px 15px;
+    background-color: #005bb5; /* リンクの背景色 */
+    border-radius: 5px; /* ボタンのような丸みを追加 */
+}
+
+nav ul li a:hover {
+    background-color: #003f8a; /* ホバー時の背景色 */
+}
+
+/* メインコンテンツのスタイル */
+main {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 800px; /* 最大幅を設定 */
+    background-color: #ffffff; /* メイン部分の背景を白に */
+    border-radius: 10px; /* 角を丸くする */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影を追加 */
+}
+
+/* ボタンのスタイル */
+button {
+    background-color: #007acc;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap; /* 改行を防止 */
+    width: auto; /* 幅を自動調整 */
+    max-width: 200px; /* 最大幅を設定 */
+    overflow: hidden; /* 文字がボタン内に収まらない場合に隠す */
+}
+
+button:hover {
+    background-color: #005bb5;
+}
+
+/* フッターのスタイル */
+footer {
+    background-color: #007acc;
+    color: #ffffff;
+    padding: 10px 0;
+    margin-top: 20px;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+}

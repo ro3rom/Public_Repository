@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録</title>
+    <style>
+        /* ダークモード風スタイル */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #2E2E2E; /* ダーク背景 */
+            color: #ffffff; /* 白文字 */
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-top: 20px;
+            color: #0077b6; /* 水色 */
+        }
+
+        .form-container {
+            margin-top: 30px;
+            background-color: #333333; /* 背景色 */
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .form-container label {
+            display: block;
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: #ffffff;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #0077b6;
+            background-color: #444444;
+            color: white;
+            font-size: 1em;
+        }
+
+        .form-container input:focus {
+            border-color: #00bfff; /* フォーカス時の色 */
+        }
+
+        .form-container button {
+            background-color: #0077b6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .link {
+            display: block;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .link a {
+            color: #0077b6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #aaaaaa;
+        }
+
+        /* アイコンのスタイル */
+        .password-field button img {
+            cursor: pointer;
+            width: 24px; /* アイコンのサイズ調整 */
+            vertical-align: middle;
+        }
+
+        .conditions {
+            background-color: #444444;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1em;
+            color: #fff;
+        }
+
+        .conditions ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>新規登録</h1>
+    
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- ユーザー名 -->
+            <label for="id_username">ユーザー名:</label>
+            {{ form.username }}
+            <div class="error">
+                {% for error in form.username.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- パスワード -->
+            <label for="id_password1">パスワード:</label>
+            <div class="password-field">
+                {{ form.password1 }}
+                <button type="button" id="togglePassword1" style="background: none; border: none; cursor: pointer;">
+                    <img src="path_to_eye_icon.png" alt="表示/非表示">
+                </button>
+            </div>
+            <div class="error">
+                {% for error in form.password1.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- パスワード確認 -->
+            <label for="id_password2">パスワード確認:</label>
+            <div class="password-field">
+                {{ form.password2 }}
+                <button type="button" id="togglePassword2" style="background: none; border: none; cursor: pointer;">
+                    <img src="path_to_eye_icon.png" alt="表示/非表示">
+                </button>
+            </div>
+            <div class="error">
+                {% for error in form.password2.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <button type="submit">登録</button>
+        </form>
+
+        <!-- 登録条件の表示 -->
+        <div class="conditions">
+            <h3>登録条件</h3>
+            <ul>
+                <li>パスワードは8文字以上で、英字と数字を含めてください。</li>
+                <li>ユーザー名は3文字以上で入力してください。</li>
+                <li>メールアドレスは有効な形式で入力してください。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="link">
+        <a href="{% url 'login' %}">ログインページへ</a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 習慣化クエスト</p>
+    </div>
+
+    <!-- JavaScriptの追加 -->
+    <script>
+        // パスワード1の表示/非表示を切り替える
+        document.getElementById('togglePassword1').addEventListener('click', function() {
+            var passwordField = document.getElementById('id_password1');
+            var passwordType = passwordField.getAttribute('type');
+            
+            if (passwordType === 'password') {
+                passwordField.setAttribute('type', 'text');
+            } else {
+                passwordField.setAttribute('type', 'password');
+            }
+        });
+
+        // パスワード確認の表示/非表示を切り替える
+        document.getElementById('togglePassword2').addEventListener('click', function() {
+            var passwordField = document.getElementById('id_password2');
+            var passwordType = passwordField.getAttribute('type');
+            
+            if (passwordType === 'password') {
+                passwordField.setAttribute('type', 'text');
+            } else {
+                passwordField.setAttribute('type', 'password');
+            }
+        });
+    </script>
+
+</body>
+</html>

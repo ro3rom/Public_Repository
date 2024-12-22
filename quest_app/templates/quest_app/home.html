@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>習慣化クエスト - ホーム</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault();
+            const result = confirm("本当にログアウトしますか？");
+            if (result) {
+                event.target.closest('form').submit();
+            }
+        }
+    </script>
+    <style>
+        /* ダークモード用の全体設定 */
+        body.dark-mode {
+            background-color: #2E2E2E;
+            color: white;
+        }
+
+        header {
+            background-color: #333;
+            padding: 20px;
+            color: white;
+        }
+
+        header h1 {
+            text-align: center;
+            margin: 0;
+            font-size: 2em;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 10px 0;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        .nav-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-button:hover {
+            background-color: #45a049;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .logout-button {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background-color: #e60000;
+        }
+
+        .logout-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #aaaaaa;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <h1>習慣化クエスト</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'quest_app:quest_list' %}" class="nav-button">クエスト</a></li>
+                <li><a href="{% url 'quest_app:exchange_points' %}" class="nav-button">ポイントショップ</a></li>
+            </ul>
+            <div class="button-container">
+                <a href="{% url 'quest_app:reward_list' %}" class="nav-button">報酬管理</a>
+                <a href="{% url 'quest_app:edit_user' %}" class="nav-button">ユーザー管理</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h2>ようこそ、{{ user.username }} さん</h2>
+        <p>習慣化クエストへようこそ！ あなたの進捗を確認して、クエストを達成しましょう。</p>
+    </main>
+
+    <div class="logout-container">
+        {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'quest_app:logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="button" onclick="confirmLogout(event)" class="logout-button">
+                    ログアウト
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 習慣化クエスト</p>
+    </footer>
+</body>
+</html>

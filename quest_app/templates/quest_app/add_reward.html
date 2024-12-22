@@ -1,0 +1,18 @@
+<!-- quest_app/templates/quest_app/add_reward.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>報酬登録</title>
+</head>
+<body>
+    <h1>報酬登録</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">登録</button>
+    </form>
+    <a href="{% url 'quest_app:reward_list' %}">戻る</a>
+</body>
+</html>
+

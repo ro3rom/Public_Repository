@@ -1,0 +1,93 @@
+<!-- welcome.html -->
+{% if user.is_authenticated %}
+    <p><a href="{% url 'logout' %}" class="btn btn-logout">ログアウト</a></p>
+{% endif %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ウェルカムページ</title>
+    <style>
+        /* ダークモード風スタイル */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #2E2E2E; /* ダーク背景 */
+            color: #ffffff; /* 白文字 */
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-top: 20px;
+            color: #0077b6; /* 水色 */
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .link {
+            display: block;
+            margin: 20px;
+            font-size: 18px;
+        }
+
+        .link a {
+            color: #0077b6;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            background-color: #333333; /* 背景色 */
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .link a:hover {
+            background-color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #aaaaaa;
+        }
+
+        /* ログアウトボタン */
+        .btn-logout {
+            background-color: #ff6347;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-logout:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>習慣化クエストへようこそ！</h1>
+    <p>このアプリは、あなただけのクエストで達成を目指すお手伝いをします。</p>
+    
+    <div class="link">
+        <a href="{% url 'register' %}">新規登録</a>
+    </div>
+    <div class="link">
+        <a href="{% url 'login' %}">ログイン</a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 習慣化クエスト</p>
+    </div>
+    
+</body>
+</html>

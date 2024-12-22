@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>報酬管理</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* ダークモードの背景とテキスト色 */
+        body.dark-mode {
+            background-color: #1a1a2e; /* ダークブルー背景 */
+            color: #f0f0f0; /* 明るいテキスト色 */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        header h1 {
+            color: #4caf50; /* 緑色のタイトル */
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        /* 報酬リストのスタイル */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        ul li {
+            background-color: #333; /* ダークグレー */
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            color: #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul li a {
+            color: #ff9800;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #333;
+            transition: background-color 0.3s;
+        }
+
+        ul li a:hover {
+            background-color: #ff9800;
+            color: #fff;
+        }
+
+        .form-container {
+            margin-top: 40px;
+            background-color: #282c34; /* ダークグレー */
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .form-container button {
+            background-color: #4caf50; /* 緑色 */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049; /* ホバー時 */
+        }
+
+        /* ホーム画面に戻るボタン */
+        .home-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn-home {
+            background-color: #007bff;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <h1>報酬管理</h1>
+    </header>
+
+    <main>
+        <!-- 報酬一覧 -->
+        <ul>
+            {% for reward in rewards %}
+                <li>
+                    <strong>{{ reward.name }}</strong> - {{ reward.points_required }} ポイント
+                    <div>
+                        <a href="{% url 'quest_app:edit_reward' reward.id %}">編集</a> |
+                        <a href="{% url 'quest_app:reward_delete' reward.id %}">削除</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li>報酬が登録されていません。</li>
+            {% endfor %}
+        </ul>
+
+        <!-- 報酬追加ボタン -->
+        <div class="form-container">
+            <a href="{% url 'quest_app:add_reward' %}" class="btn-add">新しい報酬を追加</a>
+        </div>
+
+        <!-- ポイント交換に戻るボタン -->
+        <div class="home-button">
+            <a href="{% url 'quest_app:exchange_points' %}" class="btn-home">ポイント交換に戻る</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 習慣化クエスト</p>
+    </footer>
+</body>
+</html>

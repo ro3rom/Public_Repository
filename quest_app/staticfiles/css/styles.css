@@ -1,0 +1,87 @@
+/* ダークモードの背景色と文字色 */
+body {
+    background-color: #121212; /* ダーク背景 */
+    color: #e0e0e0; /* 明るい文字 */
+    font-family: Arial, sans-serif;
+}
+
+/* ヘッダー */
+header {
+    background-color: #1f1f1f; /* 少し明るいダーク背景 */
+    padding: 20px;
+    text-align: center;
+}
+
+/* ナビゲーションバー */
+nav {
+    background-color: #333333;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #e0e0e0; /* 明るい文字 */
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* リンクのホバー効果 */
+nav ul li a:hover {
+    color: #4caf50; /* ホバー時に緑色に変更 */
+}
+
+/* メインコンテンツエリア */
+main {
+    padding: 20px;
+    background-color: #181818; /* ダークな背景 */
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* ボタン */
+button {
+    background-color: #4caf50; /* 緑色 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049; /* ホバー時に少し暗くする */
+}
+
+/* フッター */
+footer {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/* 入力フォーム */
+input[type="text"], input[type="password"], input[type="email"], textarea {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border: 1px solid #555555;
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* 入力フォームのフォーカス時 */
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: #4caf50;
+    outline: none;
+}

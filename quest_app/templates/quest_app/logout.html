@@ -1,0 +1,5 @@
+<!-- HTML -->
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">ログアウト</button>
+</form>

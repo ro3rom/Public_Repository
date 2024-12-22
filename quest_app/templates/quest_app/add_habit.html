@@ -1,0 +1,20 @@
+<!-- add_habit.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クエスト追加</title>
+</head>
+<body>
+    <h1>クエストの追加</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- フォームを自動的に表示 -->
+        <button type="submit">追加</button>
+    </form>
+
+    <a href="{% url 'habit_list' %}">習慣一覧に戻る</a>
+</body>
+</html>

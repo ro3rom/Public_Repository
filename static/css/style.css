@@ -1,0 +1,72 @@
+/* ----------------------
+   カラーパレットの定義
+---------------------- */
+:root {
+    --primary-bg: #1a1a2e;
+    --secondary-bg: #16213e;
+    --accent-color: #4caf50;
+    --text-color: #f0f0f0;
+    --button-hover: #45a049;
+    --card-bg: #282c34;
+}
+
+/* ----------------------
+   全体の基本スタイル
+---------------------- */
+body {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    font-size: 0.9em;
+}
+
+body.dark-mode {
+    background-color: #0f0f20;
+    color: var(--text-color);
+}
+
+/* ----------------------
+   ヘッダー
+---------------------- */
+header {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    padding: 20px 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ----------------------
+   ボタンのスタイル
+---------------------- */
+button {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+    transform: scale(1.05);
+}
+
+/* ----------------------
+   その他スタイル例
+---------------------- */
+.quest-card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
