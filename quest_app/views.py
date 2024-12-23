@@ -26,7 +26,6 @@ class CustomLoginView(LoginView):
 def welcome(request):
     return render(request, 'welcome.html')
 
-
 def index(request):
     if request.user.is_authenticated:
         return redirect('home')  # ログインしている場合はホーム画面にリダイレクト

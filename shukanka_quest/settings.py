@@ -26,15 +26,15 @@ DATABASES = {
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # プロジェクトのstaticディレクトリ
+    BASE_DIR / "static",  # プロジェクト内の static フォルダ
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # collectstatic が出力する場所
 
 # その他の設定
 SECRET_KEY = 'django-insecure-w=j$asi&s9wy5livve_)0-b(#8x*nl$s$@rm+5_+x4hrv&yq9@'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'yuasaminon.pythonanywhere.com']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,7 +59,10 @@ ROOT_URLCONF = 'shukanka_quest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'shukanka_quest/templates')],  # テンプレートディレクトリ
+        'DIRS': [
+            os.path.join(BASE_DIR, 'shukanka_quest/templates'),
+            os.path.join(BASE_DIR, 'quest_app/templates'),  # 追加
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,13 +99,4 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'  # 未ログインのユーザーがアクセスした場合のリダイレクト先
-
-LOGOUT_REDIRECT_URL = '/quest_app/home/'  # ログアウト後にリダイレクトするURL
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # プロジェクトディレクトリ内にdb.sqlite3が作成されます
-    }
-}
+LOGOUT_REDIRECT_URL = '/'  # ログアウト後にリダイレクトするURL

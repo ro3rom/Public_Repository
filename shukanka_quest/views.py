@@ -76,9 +76,10 @@ def add_habit(request):
 
     return render(request, 'add_habit.html')
 
-# トップページビュー
 def index(request):
-    return render(request, 'index.html')
+    if request.user.is_authenticated:
+        return redirect('home')  # ログインしている場合はホーム画面にリダイレクト
+    return redirect('welcome')  # ログインしていない場合はウェルカムページにリダイレクト
 
 def logout_view(request):
     if request.method == 'POST':

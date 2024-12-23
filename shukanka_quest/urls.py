@@ -16,14 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from quest_app import views  # quest_app.views をインポート
+from quest_app import views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import CustomLoginView
-from django.contrib.auth.views import LoginView
-
-
 
 urlpatterns = [
     path('', views.index, name='index'),  # ホームページ (仮トップ)
@@ -35,9 +32,9 @@ urlpatterns = [
     path('exchange_points/', views.exchange_points, name='exchange_points'),  # ポイント交換
     path('initialize_points/', views.initialize_points, name='initialize_points'),  # ポイント初期化
     path('welcome/', views.welcome, name='welcome'),  # Welcome画面
-    path('quest_app/', include('quest_app.urls')),  # quest_app のURLをプロジェクトに紐付け
-    path('admin/', admin.site.urls),  # ここで admin のURLが設定
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # ログアウトURLを追加
+    path('admin/', admin.site.urls),  # admin画面
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # ログアウトURL
     path('edit_user/', views.edit_user, name='edit_user'),
-    path('login/', views.login_view, name='login'),
-]
+    path('login/', views.login_view, name='login'),  # CustomLoginView を使用
+    path('quest_app/', include('quest_app.urls')),  # quest_app の URL を含める
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
