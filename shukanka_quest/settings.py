@@ -15,26 +15,12 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Database設定
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# セキュリティ関連
+SECRET_KEY = os.getenv('SECRET_KEY', '開発用のデフォルトキー')
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = ['*'] if DEBUG else ['127.0.0.1', 'localhost', 'yuasaminon.pythonanywhere.com']
 
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # プロジェクト内の static フォルダ
-]
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # collectstatic が出力する場所
-
-# その他の設定
-SECRET_KEY = 'django-insecure-w=j$asi&s9wy5livve_)0-b(#8x*nl$s$@rm+5_+x4hrv&yq9@'
-DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'yuasaminon.pythonanywhere.com']
+# アプリケーション定義
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,10 +28,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quest_app.apps.QuestAppConfig',  # quest_app の設定を追加
-    'rewards',
-    'shukanka_quest',
+    'quest_app.apps.QuestAppConfig',
+    'rewards',  # 必要なら残す
+    'shukanka_quest',  # 必要なら残す
 ]
+
+# ミドルウェア
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,14 +43,35 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# URLとWSGI
 ROOT_URLCONF = 'shukanka_quest.urls'
+WSGI_APPLICATION = 'shukanka_quest.wsgi.application'
+
+# データベース
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+# 言語とタイムゾーン
+LANGUAGE_CODE = 'ja'
+TIME_ZONE = 'Asia/Tokyo'
+USE_I18N = True
+USE_TZ = True
+
+# 静的ファイル
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# テンプレート
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'shukanka_quest/templates'),
-            os.path.join(BASE_DIR, 'quest_app/templates'),  # 追加
-        ],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,29 +83,21 @@ TEMPLATES = [
         },
     },
 ]
-WSGI_APPLICATION = 'shukanka_quest.wsgi.application'
 
+# 認証関連
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/'
+
+# メッセージフレームワーク
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
+# パスワードバリデータ
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/'  # 未ログインのユーザーがアクセスした場合のリダイレクト先
-LOGOUT_REDIRECT_URL = '/'  # ログアウト後にリダイレクトするURL

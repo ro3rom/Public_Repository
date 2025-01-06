@@ -14,7 +14,6 @@ class HabitForm(forms.ModelForm):
 
 # ユーザー登録用フォーム
 class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(label="メールアドレス", required=True, help_text="有効なメールアドレスを入力してください。")
     username = forms.CharField(
         label="ユーザー名",
         max_length=150,
@@ -34,7 +33,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'password1', 'password2']
 
 # ユーザー情報編集用フォーム
 class UserEditForm(forms.ModelForm):
@@ -77,8 +76,6 @@ class UserProfileForm(forms.ModelForm):
 
 # ユーザー変更用フォーム
 class CustomUserChangeForm(UserChangeForm):
-    email = forms.EmailField(required=True)
-
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['username', 'first_name', 'last_name']  # 必要なフィールドのみ記載

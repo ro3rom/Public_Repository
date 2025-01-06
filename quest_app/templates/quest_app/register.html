@@ -99,25 +99,25 @@
             color: #aaaaaa;
         }
 
-        /* アイコンのスタイル */
-        .password-field button img {
-            cursor: pointer;
-            width: 24px; /* アイコンのサイズ調整 */
-            vertical-align: middle;
-        }
-
-        .conditions {
-            background-color: #444444;
-            padding: 15px;
-            border-radius: 8px;
+        /* メッセージのスタイル */
+        .messages {
             margin-top: 20px;
-            font-size: 1em;
-            color: #fff;
+            padding: 10px;
+            background-color: #0077b6;
+            color: #ffffff;
+            border-radius: 5px;
+            font-size: 16px;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .conditions ul {
-            list-style-type: disc;
-            margin-left: 20px;
+        .messages.error {
+            background-color: #ff4d4d;
+        }
+
+        .messages.success {
+            background-color: #4CAF50;
         }
 
     </style>
@@ -125,7 +125,16 @@
 <body>
 
     <h1>新規登録</h1>
-    
+
+    <!-- 成功メッセージの表示 -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="form-container">
         <form method="POST">
             {% csrf_token %}
@@ -143,9 +152,6 @@
             <label for="id_password1">パスワード:</label>
             <div class="password-field">
                 {{ form.password1 }}
-                <button type="button" id="togglePassword1" style="background: none; border: none; cursor: pointer;">
-                    <img src="path_to_eye_icon.png" alt="表示/非表示">
-                </button>
             </div>
             <div class="error">
                 {% for error in form.password1.errors %}
@@ -157,9 +163,6 @@
             <label for="id_password2">パスワード確認:</label>
             <div class="password-field">
                 {{ form.password2 }}
-                <button type="button" id="togglePassword2" style="background: none; border: none; cursor: pointer;">
-                    <img src="path_to_eye_icon.png" alt="表示/非表示">
-                </button>
             </div>
             <div class="error">
                 {% for error in form.password2.errors %}
@@ -170,7 +173,6 @@
             <button type="submit">登録</button>
         </form>
 
-        <!-- 登録条件の表示 -->
         <div class="conditions">
             <h3>登録条件</h3>
             <ul>
@@ -188,33 +190,6 @@
     <div class="footer">
         <p>&copy; 2024 習慣化クエスト</p>
     </div>
-
-    <!-- JavaScriptの追加 -->
-    <script>
-        // パスワード1の表示/非表示を切り替える
-        document.getElementById('togglePassword1').addEventListener('click', function() {
-            var passwordField = document.getElementById('id_password1');
-            var passwordType = passwordField.getAttribute('type');
-            
-            if (passwordType === 'password') {
-                passwordField.setAttribute('type', 'text');
-            } else {
-                passwordField.setAttribute('type', 'password');
-            }
-        });
-
-        // パスワード確認の表示/非表示を切り替える
-        document.getElementById('togglePassword2').addEventListener('click', function() {
-            var passwordField = document.getElementById('id_password2');
-            var passwordType = passwordField.getAttribute('type');
-            
-            if (passwordType === 'password') {
-                passwordField.setAttribute('type', 'text');
-            } else {
-                passwordField.setAttribute('type', 'password');
-            }
-        });
-    </script>
 
 </body>
 </html>

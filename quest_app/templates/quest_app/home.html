@@ -94,6 +94,14 @@
             font-size: 0.9em;
             color: #aaaaaa;
         }
+
+        .message {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body class="dark-mode">
@@ -114,6 +122,15 @@
     <main>
         <h2>ようこそ、{{ user.username }} さん</h2>
         <p>習慣化クエストへようこそ！ あなたの進捗を確認して、クエストを達成しましょう。</p>
+
+        <!-- メッセージの表示 -->
+        <div>
+            {% for message in messages %}
+                <div class="message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
     </main>
 
     <div class="logout-container">

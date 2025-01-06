@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.utils.timezone import now
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
-
+from . import views
 
 # 自分のアプリケーションのモデルやフォームをインポート
 from .models import Point, Reward, Quest, Habit, HabitQuest, Profile  # Profile は一度にインポート
@@ -24,7 +24,7 @@ class CustomLoginView(LoginView):
 
 # ウェルカムページのビュー
 def welcome(request):
-    return render(request, 'welcome.html')
+    return render(request, 'shukanka_quest/welcome.html')
 
 def index(request):
     if request.user.is_authenticated:
@@ -63,19 +63,31 @@ def logout_view(request):
 
 
 # ホーム画面ビュー
-@login_required 
+@login_required
 def home(request):
-    quests = Quest.objects.all()  # クエストを全て取得
+    # クエストを全て取得
+    quests = Quest.objects.all()
+
+    # ユーザーがログインしている場合にメッセージを表示
+    if request.user.is_authenticated:
+        messages.success(request, f'ようこそ、{request.user.username} さん！')
+
+    # テンプレートをレンダリング
     return render(request, 'quest_app/home.html', {'quests': quests})
 
 # 新規登録ページのビュー
 def register_view(request):
+    """新規登録用のビュー"""
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()  # ユーザーを保存
-            login(request, user)  # ログイン
-            return redirect('home')  # 登録後にホームにリダイレクト
+            login(request, user)  # 自動ログイン
+            messages.success(request, '登録が完了しました！')  # 成功メッセージ
+            return redirect('home')  # 登録後にホーム画面にリダイレクト
+        else:
+            # フォームが無効な場合、エラーメッセージを追加
+            messages.error(request, '入力内容に誤りがあります。再度お試しください。')
     else:
         form = CustomUserCreationForm()
 

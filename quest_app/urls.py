@@ -1,8 +1,5 @@
 from django.urls import path
 from . import views
-from django.contrib.auth import views as auth_views
-from .views import CustomLoginView
-from django.contrib import admin
 
 app_name = 'quest_app'  # 名前空間を設定
 
@@ -21,9 +18,9 @@ urlpatterns = [
     path('edit_user/', views.edit_user, name='edit_user'),  
     path('reward_list/', views.reward_list, name='reward_list'),
     path('reward_delete/<int:reward_id>/', views.reward_delete, name='reward_delete'),
-    path('register/', views.register_view, name='register'),
-    path('login/', views.login_view, name='login'),  # CustomLoginView を使用
-    path('logout/', views.logout_view, name='logout'),
+    path('login/', views.login_view, name='login'),  # ログイン
+    path('logout/', views.logout_view, name='logout'),  # ログアウト
     path('welcome/', views.welcome, name='welcome'),  # ウェルカム画面
-    path('quest_list/', views.quest_list, name='quest_list'),  # quest_list のURLを追加
+    path('quest_list/', views.quest_list, name='quest_list'),  # クエストリスト
+    path('register/', views.register_view, name='register_view'),  
 ]
