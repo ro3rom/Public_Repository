@@ -23,4 +23,6 @@ urlpatterns = [
     path('welcome/', views.welcome, name='welcome'),  # ウェルカム画面
     path('quest_list/', views.quest_list, name='quest_list'),  # クエストリスト
     path('register/', views.register_view, name='register_view'),  
+    path('delete_account/', views.delete_account, name='delete_account'),
 ]
+

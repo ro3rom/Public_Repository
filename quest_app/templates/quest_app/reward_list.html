@@ -61,41 +61,26 @@
             color: #fff;
         }
 
-        .form-container {
-            margin-top: 40px;
-            background-color: #282c34; /* ダークグレー */
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .form-container button {
+        /* 統一されたボタンスタイル */
+        .btn {
+            display: inline-block;
             background-color: #4caf50; /* 緑色 */
-            color: #fff;
+            color: white;
             padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
             border-radius: 5px;
-            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
 
-        .form-container button:hover {
+        .btn:hover {
             background-color: #45a049; /* ホバー時 */
         }
 
-        /* ホーム画面に戻るボタン */
         .home-button {
             margin-top: 20px;
             text-align: center;
-        }
-
-        .btn-home {
-            background-color: #007bff;
-            padding: 10px 20px;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .btn-home:hover {
-            background-color: #0056b3;
         }
 
         footer {
@@ -117,8 +102,8 @@
                 <li>
                     <strong>{{ reward.name }}</strong> - {{ reward.points_required }} ポイント
                     <div>
-                        <a href="{% url 'quest_app:edit_reward' reward.id %}">編集</a> |
-                        <a href="{% url 'quest_app:reward_delete' reward.id %}">削除</a>
+                        <a href="{% url 'quest_app:edit_reward' reward.id %}" class="btn">編集</a>
+                        <a href="{% url 'quest_app:reward_delete' reward.id %}" class="btn">削除</a>
                     </div>
                 </li>
             {% empty %}
@@ -128,12 +113,13 @@
 
         <!-- 報酬追加ボタン -->
         <div class="form-container">
-            <a href="{% url 'quest_app:add_reward' %}" class="btn-add">新しい報酬を追加</a>
+            <a href="{% url 'quest_app:add_reward' %}" class="btn">新しい報酬を追加</a>
         </div>
 
         <!-- ポイント交換に戻るボタン -->
         <div class="home-button">
-            <a href="{% url 'quest_app:exchange_points' %}" class="btn-home">ポイント交換に戻る</a>
+            <a href="{% url 'quest_app:exchange_points' %}" class="btn">ポイント交換に戻る</a>
+            <a href="{% url 'quest_app:home' %}" class="btn">ホームに戻る</a>
         </div>
     </main>
 

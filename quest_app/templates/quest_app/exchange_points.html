@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ポイント交換</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         /* 基本のダークモードスタイル */
-        body {
+        body.dark-mode {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #1a1a2e; /* ダークブルー背景 */
@@ -33,36 +35,43 @@
         }
 
         /* 報酬セクション */
-        .reward {
+        .reward-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
             margin: 20px 0;
         }
 
         /* 報酬カード */
         .reward-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            margin: 10px 0;
+            width: 300px;
+            padding: 20px;
             background: #333; /* ダークグレー */
-            border-radius: 6px;
+            border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
         }
 
         .reward-card p {
-            margin: 0;
+            margin: 0 0 10px;
             font-size: 16px;
             color: #f0f0f0; /* 明るいテキスト色 */
         }
 
         .reward-card button {
-            padding: 6px 12px;
+            padding: 10px 20px;
             font-size: 14px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             color: #fff;
-            background: #4caf50; /* 緑色 */
+            background: #007bff; /* 青色 */
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .reward-card button:hover {
+            background: #0056b3; /* ホバー時の濃い青色 */
         }
 
         .reward-card button:disabled {
@@ -78,45 +87,43 @@
         .navigation-buttons a {
             margin: 10px;
             padding: 10px 20px;
-            background: #4caf50; /* 緑色 */
+            background: #007bff; /* 青色 */
             color: #fff;
             border-radius: 6px;
             text-decoration: none;
             display: inline-block;
+            transition: background-color 0.3s;
         }
 
         .navigation-buttons a:hover {
-            background: #45a049; /* ホバー時の色 */
+            background: #0056b3; /* ホバー時の濃い青色 */
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
     <h1>ポイント交換</h1>
     <p class="points">現在のポイント: {{ user_points }}</p>
 
     <h2>交換可能な報酬</h2>
-    <div class="reward">
-        <ul>
-            {% for reward in rewards %}
-                <li>
-                    <div class="reward-card">
-                        <p><strong>{{ reward.name }}</strong> - 必要ポイント: {{ reward.points_required }}</p>
-                        {% if user_points >= reward.points_required %}
-                            <form method="post" action="{% url 'quest_app:exchange_points' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="reward" value="{{ reward.id }}">
-                                <button type="submit">交換</button>
-                            </form>
-                        {% else %}
-                            <span>ポイント不足</span>
-                        {% endif %}
-                    </div>
-                </li>
-            {% empty %}
-                <li>報酬が登録されていません。</li>
-            {% endfor %}
-        </ul>
+    <div class="reward-container">
+        {% for reward in rewards %}
+            <div class="reward-card">
+                <p><strong>{{ reward.name }}</strong></p>
+                <p>必要ポイント: {{ reward.points_required }}</p>
+                {% if user_points >= reward.points_required %}
+                    <form method="post" action="{% url 'quest_app:exchange_points' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="reward" value="{{ reward.id }}">
+                        <button type="submit">交換</button>
+                    </form>
+                {% else %}
+                    <button type="button" disabled>ポイント不足</button>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>報酬が登録されていません。</p>
+        {% endfor %}
     </div>
 
     <!-- ナビゲーションボタン -->

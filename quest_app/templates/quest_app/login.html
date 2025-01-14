@@ -4,128 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
-        /* ダークモード風スタイル */
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #2E2E2E; /* ダーク背景 */
-            color: #ffffff; /* 白文字 */
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* ダークモード背景 */
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        h1 {
-            font-size: 2em;
-            margin-top: 20px;
-            color: #0077b6; /* 水色 */
+        main {
+            background-color: #1e1e1e; /* ダークグレー背景 */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            text-align: center;
+            color: #ffffff; /* 文字色を白に */
+        }
+
+        h2 {
+            color: #4db8ff; /* パステル水色 */
+            margin-bottom: 20px;
+            font-size: 1.8em;
         }
 
         .form-container {
-            margin-top: 30px;
-            background-color: #333333; /* 背景色 */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 20px;
         }
 
-        .form-container form {
-            text-align: left;
-        }
-
-        .form-container label {
-            font-size: 16px;
-            margin-top: 10px;
-            display: block;
-        }
-
-        .form-container input {
-            padding: 8px;
-            margin-top: 5px;
+        .form-container input,
+        .form-container button {
             width: 100%;
-            box-sizing: border-box;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #555; /* ダークモードのボーダー色 */
+            margin: 8px 0;
+            font-size: 1em;
+            background-color: #333; /* ダークグレー背景 */
+            color: #fff; /* 文字色 */
+        }
+
+        .form-container input:focus,
+        .form-container button:focus {
+            outline: none;
+            border-color: #4db8ff; /* フォーカス時の水色 */
         }
 
         .form-container button {
-            background-color: #0077b6;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 6px;
+            background-color: #4db8ff; /* 水色のボタン */
             border: none;
-            font-size: 16px;
             cursor: pointer;
-            margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
 
         .form-container button:hover {
-            background-color: #0056b3;
+            background-color: #3399cc; /* ホバー時の色 */
         }
 
-        .link {
-            display: block;
-            margin-top: 20px;
-            font-size: 18px;
+        .error-messages {
+            background-color: #f44336; /* エラーメッセージの赤 */
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .link a {
-            color: #0077b6;
+        .error-messages p {
+            margin: 0;
+        }
+
+        p {
+            font-size: 1em;
+            color: #aaa; /* 薄い文字色 */
+        }
+
+        a {
+            color: #4db8ff; /* 水色リンク */
             text-decoration: none;
-            font-weight: bold;
         }
 
-        .link a:hover {
+        a:hover {
             text-decoration: underline;
-        }
-
-        .footer {
-            margin-top: 50px;
-            font-size: 0.9em;
-            color: #aaaaaa;
-        }
-
-        .error {
-            color: red;
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
+    <main>
+        <h2>ログイン</h2>
 
-    <h1>ログイン</h1>
-    
-    <div class="form-container">
-        <form method="POST">
+        <!-- エラーメッセージの表示 -->
+        {% if messages %}
+            <div class="error-messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" class="form-container">
             {% csrf_token %}
-            
-            <div>
-                <label for="id_username">ユーザー名:</label>
-                <input type="text" name="username" id="id_username" required>
-            </div>
-            <div>
-                <label for="id_password">パスワード:</label>
-                <input type="password" name="password" id="id_password" required>
-            </div>
-
-            {% if error %}
-                <p class="error">{{ error }}</p>
-            {% endif %}
-            
+            {{ form.as_p }}
             <button type="submit">ログイン</button>
         </form>
-    </div>
 
-    <div class="link">
-        <a href="{% url 'register' %}">新規登録はこちら</a>
-    </div>
-
-    <div class="footer">
-        <p>&copy; 2024 習慣化クエスト</p>
-    </div>
-    
+        <p>アカウントをお持ちでない場合、<a href="{% url 'register' %}">新規登録</a>してください。</p>
+    </main>
 </body>
 </html>

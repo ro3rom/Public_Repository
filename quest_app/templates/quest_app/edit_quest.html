@@ -1,5 +1,127 @@
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">更新</button>
-</form>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クエスト編集</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* ダークモードの背景とテキスト色 */
+        body.dark-mode {
+            background-color: #1a1a2e; /* ダークブルー背景 */
+            color: #f0f0f0; /* 明るいテキスト色 */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        header h1 {
+            color: #4caf50; /* 緑色のタイトル */
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        .form-container {
+            background-color: #333; /* ダークグレー背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #444; /* ダークグレー */
+            color: #f0f0f0;
+        }
+
+        .form-container button {
+            background-color: #4caf50; /* 緑色 */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049; /* ホバー時の色 */
+        }
+
+        .home-button {
+            background-color: #2196F3; /* 青色 */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #1976D2; /* ホバー時の色 */
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <h1>クエスト編集</h1>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">更新</button>
+            </form>
+
+            <!-- ホーム画面に戻るボタン -->
+            <a href="{% url 'quest_app:home' %}" class="home-button">ホームに戻る</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 習慣化クエスト</p>
+    </footer>
+</body>
+</html>

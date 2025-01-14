@@ -1,25 +1,117 @@
-{% extends "base_generic.html" %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>報酬編集</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* ダークモードの背景とテキスト色 */
+        body.dark-mode {
+            background-color: #1a1a2e; /* ダークブルー背景 */
+            color: #f0f0f0; /* 明るいテキスト色 */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-{% block content %}
-  <h1>報酬の編集</h1>
-  
-  <form method="post">
-    {% csrf_token %}
-    
-    <div>
-      <label for="name">報酬名:</label>
-      <input type="text" id="name" name="name" value="{{ reward.name }}">
-    </div>
-    
-    <div>
-      <label for="points_required">必要ポイント:</label>
-      <input type="number" id="points_required" name="points_required" value="{{ reward.points_required }}">
-    </div>
-    
-    <!-- ここで完了ボタンを追加 -->
-    <button type="submit">完了</button>
-  </form>
-  
-  <a href="{% url 'quest_app:reward_list' %}"><button>報酬管理に戻る</button></a>
-  <a href="{% url 'quest_app:exchange_points' %}"><button>ポイント交換に戻る</button></a>  <!-- ポイント交換画面に戻るリンク -->
-{% endblock %}
+        header {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        header h1 {
+            color: #4caf50; /* 緑色のタイトル */
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        /* フォームのスタイル */
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #333; /* ダークグレー */
+            padding: 20px;
+            border-radius: 10px;
+            color: #f0f0f0;
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #555;
+            color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        /* 戻るボタンのスタイル */
+        .home-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .home-button a {
+            display: inline-block;
+            background-color: #4caf50; /* 緑色 */
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .home-button a:hover {
+            background-color: #45a049; /* ホバー時 */
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <header>
+        <h1>報酬編集</h1>
+    </header>
+
+    <main>
+        <!-- フォーム -->
+        <form method="POST">
+            {% csrf_token %}
+            <label for="id_name">報酬名</label>
+            {{ form.name }}  <!-- 報酬名フィールド -->
+
+            <label for="id_points_required">必要ポイント</label>
+            {{ form.points_required }}  <!-- 必要ポイントフィールド -->
+
+            <button type="submit">保存</button> <!-- 保存ボタン -->
+        </form>
+
+        <!-- 戻るボタン -->
+        <div class="home-button">
+            <a href="{% url 'quest_app:reward_list' %}">報酬一覧に戻る</a> <!-- 報酬一覧へのリンク -->
+        </div>
+    </main>
+</body>
+</html>

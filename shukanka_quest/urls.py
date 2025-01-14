@@ -37,4 +37,5 @@ urlpatterns = [
     path('edit_user/', views.edit_user, name='edit_user'),
     path('login/', views.login_view, name='login'),  # CustomLoginView を使用
     path('quest_app/', include('quest_app.urls')),  # quest_app の URL を含める
+    path('delete_account/', views.delete_account, name='delete_account'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

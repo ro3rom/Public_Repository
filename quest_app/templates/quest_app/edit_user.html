@@ -107,25 +107,22 @@
     </header>
 
     <main>
+        <!-- ユーザー名更新フォーム -->
         <form method="POST">
             {% csrf_token %}
-            
             <div>
                 <label for="id_username">ユーザー名</label>
                 {{ user_form.username }}
                 {% for error in user_form.username.errors %}
                     <p class="error">{{ error }}</p>
                 {% endfor %}
+                <button type="submit" name="update_username">ユーザー名更新</button>
             </div>
-            
-            <div>
-                <label for="id_email">メールアドレス</label>
-                {{ user_form.email }}
-                {% for error in user_form.email.errors %}
-                    <p class="error">{{ error }}</p>
-                {% endfor %}
-            </div>
-            
+        </form>
+        
+        <!-- パスワード更新フォーム -->
+        <form method="POST">
+            {% csrf_token %}
             <div>
                 <label for="id_new_password1">新しいパスワード</label>
                 {{ password_form.new_password1 }}
@@ -133,7 +130,6 @@
                     <p class="error">{{ error }}</p>
                 {% endfor %}
             </div>
-            
             <div>
                 <label for="id_new_password2">パスワード確認</label>
                 {{ password_form.new_password2 }}
@@ -141,9 +137,16 @@
                     <p class="error">{{ error }}</p>
                 {% endfor %}
             </div>
-
-            <button type="submit">更新</button>
+            <button type="submit" name="update_password">パスワード更新</button>
         </form>
+
+        <!-- アカウント削除ボタン -->
+        <form method="POST" action="{% url 'delete_account' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-delete-account">アカウント削除</button>
+        </form>
+        
+
 
         <!-- ホーム画面に戻るボタン -->
         <div class="home-button">

@@ -1,12 +1,117 @@
-{% extends 'base_generic.html' %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クエスト追加</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* ダークモードの背景とテキスト色 */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+    
+        header {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        header h1 {
+            color: #4caf50;
+            font-size: 2em;
+        }
+    
+        .form-container {
+            background-color: #282c34;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            width: 70%;  /* 幅を少し小さく */
+            max-width: 400px; /* 最大幅を400pxに変更 */
+        }
+    
+        .quest-form input, .quest-form textarea {
+            width: 100%;
+            padding: 6px 10px;  /* paddingを小さく */
+            margin: 8px 0;  /* マージンも少し小さく */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            font-size: 14px;  /* フォントサイズを少し小さく */
+        }
+    
+        .quest-form textarea {
+            height: 80px;  /* テキストエリアの高さを調整 */
+        }
+    
+        .quest-form button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+    
+        .quest-form button:hover {
+            background-color: #45a049;
+        }
+    
+        .home-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .btn-home {
+            background-color: #007bff;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+    </style>
+        </head>
+<body class="dark-mode">
+    <header>
+        <h1>クエストを追加</h1>
+    </header>
 
-{% block title %}クエスト追加{% endblock %}
+    <main>
+        <!-- クエスト追加フォーム -->
+        <div class="form-container">
+            <form action="{% url 'quest_app:add_quest' %}" method="POST" class="quest-form">
+                {% csrf_token %}
+                <div>
+                    <label for="title">クエストタイトル</label>
+                    <input type="text" id="title" name="title" required placeholder="クエストタイトルを入力" />
+                </div>
+                <div>
+                    <label for="description">クエストの説明</label>
+                    <textarea id="description" name="description" required placeholder="クエストの詳細を入力"></textarea>
+                </div>
+                <div>
+                    <label for="points">ポイント</label>
+                    <input type="number" id="points" name="points" required placeholder="ポイントを入力" min="1" />
+                </div>
+                <button type="submit">クエストを追加</button>
+            </form>
+        </div>
 
-{% block content %}
-    <h1>クエストを追加</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">追加</button>
-    </form>
-{% endblock %}
+        <!-- ホームに戻るボタン -->
+        <div class="home-button">
+            <a href="{% url 'home' %}" class="btn-home">ホームに戻る</a>
+        </div>
+    </main>
+</body>
+</html>

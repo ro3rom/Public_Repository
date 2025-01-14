@@ -31,8 +31,18 @@ def index(request):
         return redirect('home')  # ログインしている場合はホーム画面にリダイレクト
     return redirect('welcome')  # ログインしていない場合はウェルカムページにリダイレクト
 
+# アカウント削除
+@login_required
+def delete_account(request):
+    if request.method == "POST":
+        user = request.user
+        user.delete()
+        messages.success(request, "アカウントを削除しました。")
+        return redirect('welcome')  # リダイレクト先を指定
+    else:
+        messages.error(request, "無効なリクエストです。")
+        return redirect('user_edit')  # 編集ページに戻る
 
-# ログインビュー: ユーザーがログインするための処理
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('home')  # ログインしている場合はホーム画面にリダイレクト
@@ -44,15 +54,12 @@ def login_view(request):
             login(request, user)
             return redirect('home')  # ホーム画面にリダイレクト
         else:
-            messages.error(request, '無効なユーザー名またはパスワードです。')
+            messages.error(request, '無効なユーザー名またはパスワードです。')  # エラーメッセージ
     else:
         form = AuthenticationForm()
 
     return render(request, 'quest_app/login.html', {'form': form})
 
-
-from django.shortcuts import redirect
-from django.contrib.auth import logout
 from django.http import HttpResponseNotAllowed
 
 def logout_view(request):
@@ -246,32 +253,45 @@ def edit_profile(request):
 
     return render(request, 'edit_profile.html', {'form': form})
 
+# 必要なフォームをインポート
+from django.contrib.auth.forms import PasswordChangeForm
 
-# ユーザー編集とパスワードの変更ビュー
 @login_required
 def edit_user(request):
     if request.method == 'POST':
         user_form = UserChangeForm(request.POST, instance=request.user)
         password_form = PasswordChangeForm(request.user, request.POST)
-        
-        # バリデーション: パスワードフォームが無効でも、パスワード変更しないことに対応
-        if user_form.is_valid():
-            user_form.save()
 
-            # パスワードが変更された場合のみ保存
-            if password_form.is_valid():
-                password_form.save()
+        # ユーザー名を更新する処理
+        if 'update_username' in request.POST and user_form.is_valid():
+            new_username = user_form.cleaned_data['username']
+            request.user.username = new_username
+            request.user.save()
+            request.session['username'] = request.user.username  # セッションを更新
+            print(f"ユーザー名が更新されました: {new_username}")  # デバッグ用の出力
 
-            return redirect('quest_app:home')  # 編集後のリダイレクト先
-        else:
-            # バリデーションエラー時にフォームとエラーメッセージを表示
-            return render(request, 'quest_app/edit_user.html', {'user_form': user_form, 'password_form': password_form, 'errors': 'フォームが無効です。再確認してください。'})
+        # メールアドレスを更新する処理
+        if 'update_email' in request.POST and user_form.is_valid():
+            request.user.email = user_form.cleaned_data['email']
+            request.user.save()
 
+        # パスワードを更新する処理
+        if 'update_password' in request.POST and password_form.is_valid():
+            password_form.save()
+
+        # 更新後のリダイレクト
+        if 'update_username' in request.POST or 'update_email' in request.POST or 'update_password' in request.POST:
+            return render(request, 'quest_app/home.html', {
+    'user': request.user,  # 更新されたユーザー情報を渡す
+})
     else:
         user_form = UserChangeForm(instance=request.user)
         password_form = PasswordChangeForm(request.user)
-    
-    return render(request, 'quest_app/edit_user.html', {'user_form': user_form, 'password_form': password_form})
+
+    return render(request, 'quest_app/edit_user.html', {
+        'user_form': user_form,
+        'password_form': password_form
+    })
 
 # 報酬追加
 @login_required
@@ -286,25 +306,28 @@ def add_reward(request):
     return render(request, 'quest_app/add_reward.html', {'form': form})
 
 # 報酬編集
-@login_required
 def edit_reward(request, reward_id):
-    reward = get_object_or_404(Reward, pk=reward_id)
+    reward = get_object_or_404(Reward, id=reward_id)
     if request.method == 'POST':
-        # フォームからのデータを処理する
         form = RewardForm(request.POST, instance=reward)
         if form.is_valid():
             form.save()
+            # 編集後に成功メッセージを設定
+            messages.success(request, "報酬が編集されました！")
             return redirect('quest_app:reward_list')
     else:
-        # GETリクエスト時にフォームを準備する
         form = RewardForm(instance=reward)
-    return render(request, 'quest_app/edit_reward.html', {'form': form})
+    return render(request, 'quest_app/edit_reward.html', {'form': form, 'reward': reward})
 
 # 報酬削除
 @login_required
 def reward_delete(request, reward_id):
     reward = get_object_or_404(Reward, id=reward_id)
     reward.delete()  # 報酬を削除
+
+    # 削除成功メッセージを設定
+    messages.success(request, "報酬が削除されました！")
+
     return redirect('quest_app:reward_list')  # 報酬管理ページにリダイレクト
 
 
